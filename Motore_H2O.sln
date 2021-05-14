@@ -1,0 +1,41 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CreaFatturaNota", "CreaFatturaNota\CreaFatturaNota.vbproj", "{A37C33DB-7FD8-4FBB-8377-2FF7ACDCEEF4}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ServizioMotoreH2OSRV", "ServizioMotoreH2OSRV\ServizioMotoreH2OSRV.vbproj", "{11F2CB52-4091-452F-8525-48F50C0C1EAA}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RemotingInterfaceMotoreH2O", "RemotingInterfaceMotoreH2O\RemotingInterfaceMotoreH2O.vbproj", "{38F0C043-2573-4556-8DFA-61EAD0C342F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{63E7E4D7-98BD-4F6F-BD70-A0CF7C002BF3}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A37C33DB-7FD8-4FBB-8377-2FF7ACDCEEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37C33DB-7FD8-4FBB-8377-2FF7ACDCEEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37C33DB-7FD8-4FBB-8377-2FF7ACDCEEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37C33DB-7FD8-4FBB-8377-2FF7ACDCEEF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F2CB52-4091-452F-8525-48F50C0C1EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F2CB52-4091-452F-8525-48F50C0C1EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F2CB52-4091-452F-8525-48F50C0C1EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F2CB52-4091-452F-8525-48F50C0C1EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F0C043-2573-4556-8DFA-61EAD0C342F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F0C043-2573-4556-8DFA-61EAD0C342F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F0C043-2573-4556-8DFA-61EAD0C342F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F0C043-2573-4556-8DFA-61EAD0C342F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57D6982E-BA83-4BA8-AB5D-A3C6C89BE941}
+	EndGlobalSection
+EndGlobal

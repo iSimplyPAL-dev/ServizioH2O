@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>CreaFatturaNota</name>
+    <version>1.0.3531.24487</version>
+    <fullname>CreaFatturaNota, Version=1.0.3531.24487, Culture=neutral, PublicKeyToken=null</fullname>
+  </assembly>
+  <members>
+    <member name="T:CreaFatturaNota.ClsElaborazione">
+      <summary>
+ Permette di elaborare il dovuto e di determinare le fatture. 
+ </summary>
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	01/09/2008	Created 
+ </history></member>
+    <member name="M:CreaFatturaNota.ClsElaborazione.CreaRuoloH2O(RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.ObjLettura[],RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.ObjTariffe,System.Int32,System.String)">
+      <summary>
+ Per ogni lettura passata al metodo tramite l'oggetto ObjLettura vengono determinati:<br />
+ - consumo (inbase alla lettuar precedente e alla lettura attuale)<br />
+ - giorni di consumo(in base alla data di lettura precedente e alla data di lettura attuale)<br />
+ - l'importo della fattura in base a tutte le tariffe configurate<br />
+ </summary>
+ <param name="oListLetture">array di oggetti di tipo ObjLettura</param>
+ <param name="oMyTariffe">oggetto di tipo ObjTariffe</param>
+ <param name="nBaseTempo">Integer che contiene l'intervallo massimo sul quale si devono calcolare gli importi<br />
+ (solitamente le tariffe sono calcolate su base annuale e quindi nBaseTempo sarà uguale a 365/366).</param>
+ <param name="sOperatore" />
+ <returns>un oggetto di tipo ObjTotRuoloFatture contenente le informazioni generali del flusso creato.</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member>
+    <member name="M:CreaFatturaNota.ClsElaborazione.CalcolaConsumo(System.Int32,System.Int32)">
+      <summary>
+ In base alla lettura precedente e alla lettura attuale viene determinato il consumo. 
+ </summary>
+ <param name="nLetturaPrec">Integer contenente la lettura precedente</param>
+ <param name="nLetturaAtt">Integer contenente la lettura attuale</param>
+ <returns>Integer contenente il consumo</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member>
+    <member name="M:CreaFatturaNota.ClsElaborazione.CalcolaGiorni(System.DateTime,System.DateTime,System.Int32)">
+      <summary>
+ In base alla data di lettura precedente e alla data di lettura attuale vengono determinati i giorni di consumo.<br />
+ Viene determinata l'unità di misura del tempo:<br />
+ - se nBaseTempo è uguale a 365 o 366 l'unità di misura è in giorni<br />
+ - se nBaseTempo è uguale a 12 l'unità di misura è in mesi<br />
+ </summary>
+ <param name="tDataPrecedente">Date contenente la data di lettura precedente</param>
+ <param name="tDataAttuale">Date contenente la data di lettura attuale</param>
+ <param name="nBaseTempo">Integer che contiene l'intervallo massimo sul quale si devono calcolare gli importi 
+ (solitamente le tariffe sono calcolate su base annuale e quindi nBaseTempo sarà uguale a 365/366)</param>
+ <returns>Integer contenente il numero di giorni</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member>
+    <member name="M:CreaFatturaNota.ClsElaborazione.CalcolaDovutoH2O(RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.ObjLettura,RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.ObjTariffe,System.String,RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.ObjFattura@)">
+      <summary>
+ L'oggetto ObjLettura contiene i dati della lettura (data lettura precedente, data lettura attuale, anagrafica, <br />
+ lettura precedente, lettura attuale, etc...).<br />
+ L'oggetto ObjTariffe contiene tutti i parametri per il calcolo delle fatture (configurazione scaglioni, canoni, addizionali, quote fisse,ecc...)<br />
+ La procedura in base al consumo e ai giorni determina gli importi delle tariffe configurate a Sistema:<br />
+ - scaglioni<br />
+ - canoni<br />
+ - addizionali<br />
+ - nolo<br />
+ - quota fissa<br />
+ - IVA<br />
+ </summary>
+ <param name="oLettura">Oggetto di tipo ObjLettura</param>
+ <param name="oTariffe">Oggetto di tipo ObjTariffe</param>
+ <param name="sOperatore">stringa contenente il nome dell'operatore</param>
+ <param name="oFattura">Restituisce un oggetto di tipo ObjFattura</param>
+ <returns>Integer<br />
+ Il metodo restituisce 0 se si è verificato un errore 
+ Il metodo restituisce 1 se è andato a buon fine 
+ </returns>
+ <example>
+ Esempio di calcolo bolletta: 
+ <para>
+ Dati Contatore: 
+ </para>
+ Data Lettura Precedente = 01/01/2007	Lettura Precedente = 100<br />
+ Data Lettura Attuale = 30/06/2007	Lettura Attuale = 600<br />
+<br />
+ Consumo = 500	Giorni = 181<br />
+ Tipologia utenza = domestica<br />
+ Numero utenze = 2<br />
+ <para>
+ Tariffe<br />
+ Scaglioni Validi<br />
+ Da 1 Mc	a 200	0,150000 € /Mc	IVA al 10%<br />
+ Da 201 Mc	a 999999999	0,220000 €/Mc	IVA al 10%<br />
+ </para>
+ <para>
+ Canoni<br />
+ Depurazione	0,150000 € Mc	80% del Consumo	IVA al 10%<br />
+ Fognatura	0,330000 €/Mc	80% del Consumo	IVA al 10%<br />
+ </para>
+ <para>
+ Addizionali<br />
+ 0,90	Imposta di Bollo	IVA esente<br />
+ </para>
+ <para>
+ Quota Fissa<br />
+<br />
+ domestica 	Da 1 Mc	a 100 Mc	5,00 €<br />
+ domestica  	Da 101 Mc	a 200 Mc	7,00 €<br />
+ domestica 	Da 201 Mc	a 300 Mc	9,00 €<br />
+ domestica 	Da 301 Mc	a 400 Mc	10,00 €<br />
+ domestica 	Da 401 Mc	a 999 Mc	20,00 €<br />
+ <br />
+ Determinazione Importi Dovuti<br />
+ Consumo per utenza = 500/2 = 250<br />
+<br />
+ </para>
+ <para>
+ Scaglioni<br />
+ 200 Mc	0,150000 €/Mc	(((200 * 0,150000)*181)/365) *2 = 29,75 €<br />
+ 50 Mc	0,220000 €/Mc	(((50 * 0,220000)*181)/365) *2 = 10,91 €<br />
+<br />
+ Totale Scaglioni = 40,66 €<br />
+</para>
+ <para>
+ Canoni<br />
+ Depurazione	0,150000 € Mc 	80% Mc Consumo	(((500*80)/100)*0,150000)*181)/365)= 29,75 €<br />
+ Fognatura	0,330000 € Mc 	80% Mc Consumo	(((500*80)/100)*0,330000)*181)/365)= 65,46 €<br />
+<br />
+ Totale Canoni = 95,21 €<br />
+ </para>
+ <para>
+ Addizionali<br />
+ 0,90	Imposta di Bollo<br />
+<br />
+ Totale Addizionali = 0,90 €<br />
+ </para>
+ <para>
+ Quota Fissa<br />
+ Da 401 Mc	a 999 Mc	20,00 €<br />
+<br />
+ Totale Quota Fissa = 20,00 €<br />
+ </para>
+ <para>
+ Totale Imponibile al 10% = 40,66 € + 95,21 € + 20,00 € = 155,87 €<br />
+ Totale Imponibile IVA esente = 0,90 €<br />
+ Totale IVA al 10% = 15,59 €<br />
+ Totale = 155,87 € + 0,90 € + 15,59 € = 172,36 €<br />
+ Totale Fattura = 172,36 € <br />
+<member name="F:CreaFatturaNota.ClsElaborazione.Regio"><summary>
+ La procedura di calcolo è stata suddivisa in varie funzioni una per ogni singolo blocco di tariffa 
+ </summary>
+ <history>
+ 	[monicatarello]	21/10/2008	Created 
+ </history></member><member name="M:CreaFatturaNota.ClsElaborazione.GetConsumo(System.Int32,System.Int32,System.Int32)"><summary>
+ La funzione determina il consumo per singola utenza applicando il tipo di arrotondamento selezionato per il periodo. 
+ </summary>
+ <param name="nMyConsumo">Intero contiene il consumo totale.</param>
+ <param name="nMyUtenze">Intero contiene il numero di utenze.</param>
+ <param name="nMyArrotondamento">Intero contiene la tipologia di arrotondamento.</param>
+ <returns>Precisione doppia restituisce il consumo calcolato.</returns>
+ <remarks>
+ </remarks>
+ <history>
+ 	[monicatarello]	21/10/2008	Created 
+ </history></member><member name="M:CreaFatturaNota.ClsElaborazione.CalcolaDettaglioIva(System.Double,System.Double,CreaFatturaNota.ClsElaborazione.oDettaglioAliquote[]@)"><summary>
+ 
+ </summary>
+ <param name="nAliquotaDett" />
+ <param name="impBaseDett" />
+ <param name="oAliquote" />
+ <returns />
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member><member name="M:CreaFatturaNota.ClsElaborazione.GetConsumoCalcolo(System.Double,System.Double@,System.Int32,RemotingInterfaceMotoreH2O.MotoreH2o.Oggetti.OggettoScaglione)"><summary>
+ Determina i MC da utilizzare per il calcolo degli scaglioni. 
+ </summary>
+ <param name="nConsumoARif">Integer</param>
+ <param name="nConsumoDaRif">Integer</param>
+ <param name="nTipoUtenzaRif">Integer</param>
+ <param name="oScaglioneRif">Oggetto di tipo OggettoScaglione</param>
+ <returns />
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member><member name="M:CreaFatturaNota.ClsElaborazione.ArrotondaEuroIntero(System.String)"><summary>
+ 
+ </summary>
+ <param name="impDaArrotondare" />
+ <returns />
+ <remarks>
+ </remarks>
+ <history>
+ 	[lauratappero]	29/08/2008	Created 
+ </history></member></para></example></member>
+  </members>
+</doc>
