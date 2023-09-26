@@ -26,7 +26,7 @@ Namespace ServizioMotoreH2OSRV
         Private Shared ReadOnly log As ILog = LogManager.GetLogger(GetType(ServizioMotoreH2O))
         'true --> quando si deve buildare il servizio
         'false --> quando si vuole lanciare in console per il debug
-        Private Shared _runService As Boolean = False
+        Private Shared _runService As Boolean = True
 
 #Region " Component Designer generated code "
 
